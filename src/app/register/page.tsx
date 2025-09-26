@@ -5,11 +5,12 @@ import { registerSchema, RegisterSchema } from './register-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { handleAppError } from '@/utils/handleAppError';
 import AuthFormWrapper from '../components/AuthFormWrapper';
-import { axiosClient } from '@/lib/axios-config';
 import { ROUTES } from '@/lib/routes-config';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import { authService } from '@/services/auth-service';
+import { userService } from '@/services/user-service';
+import { createAvatar } from '@/utils/avatar';
 
 const RegisterPage = () => {
   const router = useRouter();
@@ -21,8 +22,18 @@ const RegisterPage = () => {
 
   const onSubmit = async (data: RegisterSchema) => {
     try {
-      await authService.register(data.email, data.password);
-      await axiosClient.post(ROUTES.REGISTER, data);
+      const userCredential = await authService.register(
+        data.email,
+        data.password
+      );
+      const uid = userCredential.user.uid;
+
+      await userService.createUser({
+        uid,
+        name: data.name,
+        email: data.email,
+        avatarUrl: createAvatar(),
+      });
       toast.success('User registered successfully!');
 
       router.push(ROUTES.CHATS);
