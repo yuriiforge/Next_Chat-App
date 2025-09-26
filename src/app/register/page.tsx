@@ -9,6 +9,7 @@ import { axiosClient } from '@/lib/axios-config';
 import { ROUTES } from '@/lib/routes-config';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
+import { authService } from '@/services/auth-service';
 
 const RegisterPage = () => {
   const router = useRouter();
@@ -20,10 +21,11 @@ const RegisterPage = () => {
 
   const onSubmit = async (data: RegisterSchema) => {
     try {
+      await authService.register(data.email, data.password);
       await axiosClient.post(ROUTES.REGISTER, data);
       toast.success('User registered successfully!');
 
-      router.push(ROUTES.HOME);
+      router.push(ROUTES.CHATS);
     } catch (error) {
       handleAppError(error);
     }

@@ -5,10 +5,11 @@ import { loginSchema, LoginSchema } from './loginSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { handleAppError } from '@/utils/handleAppError';
 import AuthFormWrapper from '../components/AuthFormWrapper';
-import { axiosClient } from '@/lib/axios-config';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import { ROUTES } from '@/lib/routes-config';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '@/lib/firebase-config';
 
 const LoginPage = () => {
   const router = useRouter();
@@ -20,10 +21,10 @@ const LoginPage = () => {
 
   const onSubmit = async (data: LoginSchema) => {
     try {
-      await axiosClient.post('/login', data);
+      await signInWithEmailAndPassword(auth, data.email, data.password);
       toast.success('User logged in successfully!');
 
-      router.push(ROUTES.HOME);
+      router.push(ROUTES.CHATS);
     } catch (error) {
       handleAppError(error);
     }

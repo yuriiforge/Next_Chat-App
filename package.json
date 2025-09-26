@@ -11,6 +11,8 @@
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
     "axios": "^1.12.2",
+    "dayjs": "^1.11.18",
+    "emoji-picker-react": "^4.13.3",
     "firebase": "^12.3.0",
     "next": "15.5.4",
     "random-avatar-generator": "^2.0.0",
@@ -18,6 +20,7 @@
     "react-dom": "19.1.0",
     "react-hook-form": "^7.63.0",
     "react-hot-toast": "^2.6.0",
+    "react-icons": "^5.5.0",
     "zod": "^4.1.11"
   },
   "devDependencies": {
