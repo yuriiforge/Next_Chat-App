@@ -33,14 +33,14 @@ function MessageCard({ message, me, other }: Props) {
         {isMessageFromMe && (
           <img
             className="w-full h-full object-cover rounded-full"
-            src={me.avatarUrl || '/next.svg'}
+            src={me.avatarUrl}
             alt="Avatar"
           />
         )}
         {!isMessageFromMe && (
           <img
             className="w-full h-full object-cover rounded-full"
-            src={other.avatarUrl || '/next.svg'}
+            src={other.avatarUrl}
             alt="Avatar"
           />
         )}

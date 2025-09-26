@@ -15,12 +15,10 @@ function UsersCard({ avatarUrl, name, latestMessage, type }: Props) {
       {/* Avatar on the left */}
       <div className="flex-shrink-0 mr-4 relative">
         <div className="w-12 h-12 rounded-full overflow-hidden">
-          <Image
+          <img
             className="w-full h-full object-cover"
             src={avatarUrl || '/next.svg'}
             alt="Avatar"
-            width={80}
-            height={80}
           />
         </div>
       </div>
