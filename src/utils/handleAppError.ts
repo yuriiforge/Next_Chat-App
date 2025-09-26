@@ -1,4 +1,4 @@
-import { ENVIRONMENTS } from '@/config/env';
+import { ENVIRONMENTS } from '@/enums/env';
 import toast from 'react-hot-toast';
 
 export const handleAppError = (

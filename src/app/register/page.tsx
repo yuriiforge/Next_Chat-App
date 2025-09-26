@@ -5,8 +5,13 @@ import { registerSchema, RegisterSchema } from './register-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { handleAppError } from '@/utils/handleAppError';
 import AuthFormWrapper from '../components/AuthFormWrapper';
+import { axiosClient } from '@/lib/axios-config';
+import { ROUTES } from '@/lib/routes-config';
+import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 
 const RegisterPage = () => {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -15,7 +20,10 @@ const RegisterPage = () => {
 
   const onSubmit = async (data: RegisterSchema) => {
     try {
-      //TODO perform HTTP request
+      await axiosClient.post(ROUTES.REGISTER, data);
+      toast.success('User registered successfully!');
+
+      router.push(ROUTES.HOME);
     } catch (error) {
       handleAppError(error);
     }
@@ -28,6 +36,7 @@ const RegisterPage = () => {
       handleSubmit={handleSubmit}
       authFormType="register"
     >
+      {/* Name */}
       <div>
         <label className="label">
           <span className="text-base label-text">Name</span>

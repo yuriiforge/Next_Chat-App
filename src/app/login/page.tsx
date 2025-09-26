@@ -5,17 +5,25 @@ import { loginSchema, LoginSchema } from './loginSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { handleAppError } from '@/utils/handleAppError';
 import AuthFormWrapper from '../components/AuthFormWrapper';
+import { axiosClient } from '@/lib/axios-config';
+import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
+import { ROUTES } from '@/lib/routes-config';
 
 const LoginPage = () => {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<LoginSchema>({ resolver: zodResolver(loginSchema) });
 
-  const onSubmit = (data: LoginSchema) => {
+  const onSubmit = async (data: LoginSchema) => {
     try {
-      // TODO perform login
+      await axiosClient.post('/login', data);
+      toast.success('User logged in successfully!');
+
+      router.push(ROUTES.HOME);
     } catch (error) {
       handleAppError(error);
     }
